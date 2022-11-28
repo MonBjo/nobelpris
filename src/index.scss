@@ -42,28 +42,27 @@ body {
   flex-direction: row;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: base.$button-color;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.fakeButton {
+  margin: .5em;
+
+  input {
+    display: none;
+  }
+  label {
+    cursor: pointer;
+    display: block;
+    padding: .25em;
+    border: .5em outset base.$button-color;
+    border-radius: 15px;
+    transition: .5s;
+    box-shadow: 5px 5px 5px black;
+  }
+  input:checked + label {
+    margin: .5em;
+    border: .25em outset base.$button-color;
+    box-shadow: 2px 2px 3px black;
+  }
 }
 
 

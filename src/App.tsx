@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import './App.css';
-import DiagramWrapper from './components/diagramWrapper';
-import MenuAnimation from './components/menuAnimation';
-import MenuDiagram from './components/menuDiagram';
+import DiagramWrapper from './components/DiagramWrapper';
+import MenuAnimation from './components/MenuAnimation';
+import MenuDiagram from './components/MenuDiagram';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [diagram, setDiagram] = useState();
+  const [animation, setAnimation] = useState();
 
   return (
     <section className="App">
