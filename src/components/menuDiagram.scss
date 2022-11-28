@@ -1,0 +1,20 @@
+.menuDiagram {
+    width: 15vw;
+    min-width: 11em;
+    height: 100vh;
+    padding-bottom: 4em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    li {
+        margin: 1em .5em;
+    }
+    button {
+        width: 100%;
+    }
+}
