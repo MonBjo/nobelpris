@@ -5,13 +5,13 @@ import MenuAnimation from './components/MenuAnimation';
 import MenuDiagram from './components/MenuDiagram';
 
 function App() {
-  const [diagram, setDiagram] = useState();
+  const [displayDiagram, setDisplayDiagram] = useState("");
   const [animation, setAnimation] = useState();
 
   return (
     <section className="App">
-      <MenuDiagram />
-      <DiagramWrapper />
+      <MenuDiagram setDisplayDiagram={setDisplayDiagram} />
+      <DiagramWrapper displayDiagram={displayDiagram} />
       <MenuAnimation />
     </section>
   )

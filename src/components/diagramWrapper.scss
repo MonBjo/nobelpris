@@ -2,4 +2,30 @@
     position: relative;
     margin-bottom: 4em;
     width: 85vw;
+
+    .diagram {
+        position: absolute;
+        background-color: #dbdbdb;
+        color: black;
+        width: 50%;
+        height: 60%;
+        box-shadow: 5px 5px 5px black;
+        left: 25%;
+        top: 15%;
+        display: none;
+    }
+    .front {
+        display: block;
+    }
+
+    #cover {
+        text-align: center;
+        >h1 {
+            font-size: 2em;
+            margin: .25em;
+        }
+        >img {
+            height: 15em;
+        }
+    }
 }
