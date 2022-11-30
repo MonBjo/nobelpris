@@ -1,19 +1,75 @@
 import './diagramWrapper.scss'
-import alfred from '../assets/alfred-nobel.jpg';
+import { useEffect, useRef } from 'react';
+import nobelCoin from '../assets/nobel-coin.png';
+import nobelTitle from '../assets/nobel-title.svg';
+import anime from 'animejs';
+import { LineController } from 'chart.js';
 
 interface Props {
     displayDiagram: string;
 }
 
 function DiagramWrapper({displayDiagram}: Props) {
-    let diagrams = document.querySelectorAll('.diagram');
-    console.log(diagrams);
+    const reference = useRef<HTMLInputElement>(null);
+    console.log(reference.current);
 
-    // ================ TODO ================ \\
-    // Figure out how to work with nodeLists. \\
+    useEffect(() => {
+        if(reference.current !== null) {
+            console.log(reference.current);
+            const refChildren = Array.from(reference.current.children);
+            if(!displayDiagram) {
+                refChildren[refChildren.length-1].classList.add('display');
+            } else {
+                
+                refChildren.forEach((children: any, id: number) => {
+                    if(children.className.includes('display')) {
+                        children.classList.add('flip');
+                        setTimeout(() => {
+                            children.classList.remove('flip');
+                        }, 2000);
+                    }
+
+                    if(children.id == displayDiagram) {
+                        children.classList.add('display');
+                    } else {
+                        setTimeout(() => {
+                            children.classList.remove('display');
+                        }, 2000);
+                    }
+                });
+
+                anime({
+                    targets: ['.diagram'],
+                    duration: 2000,
+                    direction: 'alternate',
+                    rotateX: 50,
+                    translateZ: -100
+                });
+                anime({
+                    targets: '.flip', 
+                    delay: 1000,
+                    duration: 2000,
+                    easing: 'easeInOutQuad',
+                    direction: 'alternate',
+                    rotateY: -180,
+                    translateX: 400
+                });
+            }
+        }
+    },[displayDiagram]);
+
+    // anime({
+    //     targets: '.animeTitle path',
+    //     strokeDashoffset: [anime.setDashoffset, 0],
+    //     easing: 'easeInOutSine',
+    //     duration: 1500,
+    //     delay: function(el, i) { return i * 250 },
+    //     direction: 'alternate',
+    //     loop: true
+    // });
 
     return (
-        <section className="diagramWrapper">
+        <section ref={reference} className="diagramWrapper">
             <section className="diagram" id="seventhdiagram">
                 diagram 7
             </section>
@@ -36,8 +92,8 @@ function DiagramWrapper({displayDiagram}: Props) {
                 diagram 1
             </section>
             <section className="diagram" id="cover">
-                <h1>Alfred Nobel</h1>
-                <img src={alfred} />
+                <img src={nobelTitle} className="animeTitle" />
+                <img src={nobelCoin} className="coin" />
                 <p>Nobelpriset är årliga internationella utmärkelser, som av tre svenska och en norsk institution tilldelas personer som "gjort mänskligheten den största nytta" inom fysik, kemi, fysiologi eller medicin, litteratur och fredsarbete. Priserna fastställdes av dynamitens uppfinnare, Alfred Nobel, genom hans testamente från 1895, och delades ut första gången 1901. Varje nobelpris anses som den mest prestigefyllda utmärkelsen inom sitt område.</p>
             </section>
         </section>

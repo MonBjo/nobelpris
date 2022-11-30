@@ -3,6 +3,8 @@
     margin-bottom: 4em;
     width: 85vw;
 
+    perspective: 1000px;
+
     .diagram {
         position: absolute;
         background-color: #dbdbdb;
@@ -14,18 +16,29 @@
         top: 15%;
         display: none;
     }
-    .front {
+    .display { 
+        display: block; 
+        z-index: 5;
+    }
+    .flip { 
         display: block;
+        z-index: 10;
     }
 
     #cover {
         text-align: center;
+        padding: .5em;
+        
+        .animeTitle {
+            width: 90%;
+        }
+        .coin {
+            height: 5em;
+            width: 5em;
+        }
         >h1 {
             font-size: 2em;
             margin: .25em;
-        }
-        >img {
-            height: 15em;
         }
     }
 }

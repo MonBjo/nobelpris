@@ -52,15 +52,14 @@ body {
   label {
     cursor: pointer;
     display: block;
-    padding: .25em;
-    border: .5em outset base.$button-color;
-    border-radius: 15px;
+
+    padding: 5px;
+    border: 2px outset base.$button-color;
+    border-radius: 10px;
     transition: .5s;
     box-shadow: 5px 5px 5px black;
   }
   input:checked + label {
-    margin: .5em;
-    border: .25em outset base.$button-color;
     box-shadow: 2px 2px 3px black;
   }
 }
