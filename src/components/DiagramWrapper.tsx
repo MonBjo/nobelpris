@@ -24,9 +24,10 @@ function DiagramWrapper({displayDiagram}: Props) {
                 refChildren.forEach((children: any, id: number) => {
                     if(children.className.includes('display')) {
                         children.classList.add('flip');
+                        children.classList.remove('display');
                         setTimeout(() => {
                             children.classList.remove('flip');
-                        }, 2000);
+                        }, 1500+2000);
                     }
 
                     if(children.id == displayDiagram) {
@@ -34,17 +35,17 @@ function DiagramWrapper({displayDiagram}: Props) {
                     } else {
                         setTimeout(() => {
                             children.classList.remove('display');
-                        }, 1500+1500);
+                        }, 1500+2000);
                     }
                 });
 
                 anime({
-                    targets: ['.diagram'],
+                    targets: ['.display'],
                     duration: 1500,
                     easing: 'easeInOutSine',
                     direction: 'alternate',
                     rotateX: 50,
-                    translateZ: -100,
+                    translateZ: -105,
                     endDelay: 1000
                 });
                 anime({
@@ -52,8 +53,8 @@ function DiagramWrapper({displayDiagram}: Props) {
                     easing: 'easeInOutSine',
                     direction: 'alternate',
                     keyframes: [
-                        { rotateX: 50, translateZ: -100, duration: 1500 },
-                        { rotateY: -180, duration: 2000 }
+                        { rotateX: 50, opacity: 3, translateZ: -100, duration: 1500 },
+                        { rotateY: -180, opacity: 0, duration: 2000 }
                     ]
                 });
             }

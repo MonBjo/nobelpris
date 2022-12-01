@@ -16,15 +16,29 @@
         top: 15%;
         display: none;
         transform-origin: bottom left;
+        box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 15px 15px 15px black;
     }
     .display { 
         display: block; 
-        z-index: 5;
     }
     .flip { 
         display: block;
         z-index: 10;
+        box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 15px 15px 15px black;
+        // backface-visibility: hidden;
     }
+    // === TRY TO CREATE A BACKSIDE. MAYBE === \\
+    // .flip::before {
+    //     position: absolute;
+    //     content: ' ';
+    //     right: 0px;
+    //     bottom: 0px;
+    //     top: 0px;
+    //     left: 0px;
+    //     background: rgb(66, 54, 38); 
+    //     transform: rotateY(180deg);
+    //     backface-visibility: hidden;
+    // }
 
     #cover {
         text-align: center;

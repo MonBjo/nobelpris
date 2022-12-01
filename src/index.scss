@@ -45,13 +45,15 @@ body {
 
 .fakeButton {
   margin: .5em;
-
+  
   input {
     display: none;
   }
   label {
+    background-color: base.$background-color;
     cursor: pointer;
     display: block;
+    user-select: none;
 
     padding: 5px;
     border: 2px outset base.$button-color;

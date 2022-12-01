@@ -1,6 +1,7 @@
 @use '../_base.scss';
 
 .menuAnimation {
+    z-index: 20;
     position: absolute;
     bottom: 0;
     right: 0;
