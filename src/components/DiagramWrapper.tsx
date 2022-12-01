@@ -34,25 +34,27 @@ function DiagramWrapper({displayDiagram}: Props) {
                     } else {
                         setTimeout(() => {
                             children.classList.remove('display');
-                        }, 2000);
+                        }, 1500+1500);
                     }
                 });
 
                 anime({
                     targets: ['.diagram'],
-                    duration: 2000,
+                    duration: 1500,
+                    easing: 'easeInOutSine',
                     direction: 'alternate',
                     rotateX: 50,
-                    translateZ: -100
+                    translateZ: -100,
+                    endDelay: 1000
                 });
                 anime({
-                    targets: '.flip', 
-                    delay: 1000,
-                    duration: 2000,
-                    easing: 'easeInOutQuad',
+                    targets: ['.flip'], 
+                    easing: 'easeInOutSine',
                     direction: 'alternate',
-                    rotateY: -180,
-                    translateX: 400
+                    keyframes: [
+                        { rotateX: 50, translateZ: -100, duration: 1500 },
+                        { rotateY: -180, duration: 2000 }
+                    ]
                 });
             }
         }
