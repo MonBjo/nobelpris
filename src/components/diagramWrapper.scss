@@ -15,16 +15,17 @@
         left: 25%;
         top: 15%;
         display: none;
-        transform-origin: bottom left;
         box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 15px 15px 15px black;
     }
     .display { 
         display: block; 
+        transform-origin: bottom left;
     }
     .flip { 
         display: block;
         z-index: 10;
-        box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 15px 15px 15px black;
+        box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 10px 10px 15px black;
+        transform-origin: bottom left;
         // backface-visibility: hidden;
     }
     // === TRY TO CREATE A BACKSIDE. MAYBE === \\
@@ -39,13 +40,20 @@
     //     transform: rotateY(180deg);
     //     backface-visibility: hidden;
     // }
+    .hide { 
+        display: block;
+        z-index: -10;
+        box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 10px 10px 15px black;
+    }
 
     #cover {
         text-align: center;
         padding: .5em;
+
         
         .animeTitle {
-            width: 90%;
+            width: 100%;
+            padding: 0 10%;
         }
         .coin {
             height: 5em;

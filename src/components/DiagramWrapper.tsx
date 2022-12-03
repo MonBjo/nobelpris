@@ -3,24 +3,25 @@ import { useEffect, useRef } from 'react';
 import nobelCoin from '../assets/nobel-coin.png';
 import nobelTitle from '../assets/nobel-title.svg';
 import anime from 'animejs';
-import { LineController } from 'chart.js';
 
 interface Props {
     displayDiagram: string;
+    animation: string;
 }
 
-function DiagramWrapper({displayDiagram}: Props) {
+function DiagramWrapper({displayDiagram, animation}: Props) {
     const reference = useRef<HTMLInputElement>(null);
-    console.log(reference.current);
+    // console.log(reference.current);
 
     useEffect(() => {
         if(reference.current !== null) {
-            console.log(reference.current);
+            // console.log(reference.current);
             const refChildren = Array.from(reference.current.children);
             if(!displayDiagram) {
                 refChildren[refChildren.length-1].classList.add('display');
             } else {
                 
+                if(animation == "pages") {
                 refChildren.forEach((children: any, id: number) => {
                     if(children.className.includes('display')) {
                         children.classList.add('flip');
@@ -42,34 +43,211 @@ function DiagramWrapper({displayDiagram}: Props) {
                 anime({
                     targets: ['.display'],
                     duration: 1500,
-                    easing: 'easeInOutSine',
+                    easing: 'easeInCirc',
                     direction: 'alternate',
                     rotateX: 50,
+                    rotateZ: 10, 
                     translateZ: -105,
                     endDelay: 1000
                 });
                 anime({
                     targets: ['.flip'], 
-                    easing: 'easeInOutSine',
                     direction: 'alternate',
                     keyframes: [
-                        { rotateX: 50, opacity: 3, translateZ: -100, duration: 1500 },
-                        { rotateY: -180, opacity: 0, duration: 2000 }
+                        { 
+                            rotateX: 50,
+                            rotateZ: 10, 
+                            opacity: 3,
+                            translateZ: -100, 
+                            easing: 'easeInCirc',
+                            duration: 1500 
+                        },
+                        { 
+                            rotateY: -180, 
+                            rotateZ: -5, 
+                            opacity: 0, 
+                            easing: 'easeInOutSine', 
+                            duration: 2000 
+                        }
                     ]
                 });
+                } else if(animation == "sneaking") {
+                    refChildren.forEach((children: any, id: number) => {
+                        if(children.className.includes('display')) {
+                            children.classList.add('hide');
+                            children.classList.remove('display');
+                            setTimeout(() => {
+                                children.classList.remove('hide');
+                            }, 1500*9);
+                        }
+    
+                        if(children.id == displayDiagram) {
+                            children.classList.add('display');
+                        } else {
+                            setTimeout(() => {
+                                children.classList.remove('display');
+                            }, 2000);
+                        }
+                    });
+
+                    anime({
+                        targets: ['.display'],
+                        direction: 'forwards',
+                        // easing: 'easeOutBack',
+                        easing: 'easeInBack',
+                        keyframes: [
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1,
+                                translateX: -4000,
+                                translateZ: -1000,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: 15
+                            },
+                            {
+                                duration: 500,
+                                translateX: -2500,
+                                scaleX: 0.3,
+                                scaleY: 1,
+                                skewX: 0
+                            },
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1000,
+                                translateX: -1800,
+                                translateZ: -800,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: -15
+                            },
+                            {
+                                duration: 500,
+                                translateX: -1400,
+                                scaleX: 0.3,
+                                scaleY: 1,
+                                skewX: 0
+                            },
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1000,
+                                translateX: -1100,
+                                translateZ: -600,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: 15
+                            },
+                            {
+                                duration: 500,
+                                translateX: -900,
+                                scaleX: 0.3,
+                                scaleY: 1,
+                                skewX: 0
+                            },
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1000,
+                                translateX: -800,
+                                translateZ: -400,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: -15
+                            },
+                            {
+                                duration: 500,
+                                translateX: -700,
+                                scaleX: 0.3,
+                                scaleY: 1,
+                                skewX: 0
+                            },
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1000,
+                                translateX: -600,
+                                translateZ: -200,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: 15
+                            },
+                            {
+                                duration: 500,
+                                translateX: -500,
+                                scaleX: 0.3,
+                                scaleY: 1,
+                                skewX: 0
+                            },
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1000,
+                                translateX: -400,
+                                translateZ: 100,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: -15
+                            },
+                            {
+                                duration: 500,
+                                translateX: -300,
+                                scaleX: 0.3,
+                                scaleY: 1,
+                                skewX: 0
+                            },
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1000,
+                                translateX: -200,
+                                translateZ: 150,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: 15
+                            },
+                            {
+                                duration: 500,
+                                translateX: -100,
+                                scaleX: 0.3,
+                                scaleY: 1,
+                                skewX: 0
+                            },
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1000,
+                                translateX: 0,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: -15
+                            },
+                            {
+                                duration: 500,
+                                translateX: 0,
+                                scaleX: 0.3,
+                                scaleY: 1,
+                                skewX: 0
+                            },
+                            {
+                                easing: 'easeOutBack',
+                                duration: 1000,
+                                translateX: 50,
+                                translateZ: 0,
+                                scaleX: 0.5,
+                                scaleY: 0.7,
+                                skewX: 25
+                            },
+                            {
+                                easing: 'cubicBezier(1, 1.7, .77, .8)',
+                                // easing: 'cubicBezier(.26, .14, .77, 2)',
+                                duration: 800,
+                                translateX: 0,
+                                scaleX: 1,
+                                scaleY: 1,
+                                skewX: 0
+                            }
+                        ]
+                    });
+                }
             }
         }
     },[displayDiagram]);
 
-    // anime({
-    //     targets: '.animeTitle path',
-    //     strokeDashoffset: [anime.setDashoffset, 0],
-    //     easing: 'easeInOutSine',
-    //     duration: 1500,
-    //     delay: function(el, i) { return i * 250 },
-    //     direction: 'alternate',
-    //     loop: true
-    // });
 
     return (
         <section ref={reference} className="diagramWrapper">

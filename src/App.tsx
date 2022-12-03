@@ -6,13 +6,13 @@ import MenuDiagram from './components/MenuDiagram';
 
 function App() {
   const [displayDiagram, setDisplayDiagram] = useState("");
-  const [animation, setAnimation] = useState();
+  const [animation, setAnimation] = useState("pages");
 
   return (
     <section className="App">
       <MenuDiagram setDisplayDiagram={setDisplayDiagram} />
-      <DiagramWrapper displayDiagram={displayDiagram} />
-      <MenuAnimation />
+      <DiagramWrapper displayDiagram={displayDiagram} animation={animation} />
+      <MenuAnimation setAnimation={setAnimation} />
     </section>
   )
 }

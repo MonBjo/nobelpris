@@ -6,17 +6,11 @@
     bottom: 0;
     right: 0;
     width: 85vw;
-    height: 6em;
+    height: 4em;
     text-align: center;
 
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
-
-    &>p {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
 }
