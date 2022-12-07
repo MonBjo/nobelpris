@@ -3,6 +3,16 @@ import { useEffect, useRef } from 'react';
 import nobelCoin from '../assets/nobel-coin.png';
 import nobelTitle from '../assets/nobel-title.svg';
 import anime from 'animejs';
+import { Pie, Bar, Line, PolarArea, Doughnut } from 'react-chartjs-2';
+import { 
+    yearlyPriceMoneyDiagramData, 
+    categoryDiagramData, 
+    
+    genderDiagramData, 
+    lauretsCategoryDiagramData,
+    countryDiagramData,
+    mostAwardsDiagramData
+} from './data.ts';
 
 interface Props {
     displayDiagram: string;
@@ -11,16 +21,15 @@ interface Props {
 
 function DiagramWrapper({displayDiagram, animation}: Props) {
     const reference = useRef<HTMLInputElement>(null);
-    // console.log(reference.current);
+    const totalPrices = categoryDiagramData.datasets[0].data.reduce((addedSum: any, newSum: any) => addedSum + newSum, 0);
+    const totalLauretes = lauretsCategoryDiagramData.datasets[0].data.reduce((addedSum: any, newSum: any) => addedSum + newSum, 0);
 
     useEffect(() => {
         if(reference.current !== null) {
-            // console.log(reference.current);
             const refChildren = Array.from(reference.current.children);
             if(!displayDiagram) {
-                refChildren[refChildren.length-1].classList.add('display');
+                refChildren[0].classList.add('display');
             } else {
-                
                 if(animation == "pages") {
                 refChildren.forEach((children: any, id: number) => {
                     if(children.className.includes('display')) {
@@ -58,13 +67,14 @@ function DiagramWrapper({displayDiagram, animation}: Props) {
                             rotateX: 50,
                             rotateZ: 10, 
                             opacity: 3,
-                            translateZ: -100, 
+                            translateZ: -100,
                             easing: 'easeInCirc',
                             duration: 1500 
                         },
                         { 
                             rotateY: -180, 
                             rotateZ: -5, 
+                            translateX: 50,
                             opacity: 0, 
                             easing: 'easeInOutSine', 
                             duration: 2000 
@@ -251,31 +261,45 @@ function DiagramWrapper({displayDiagram, animation}: Props) {
 
     return (
         <section ref={reference} className="diagramWrapper">
-            <section className="diagram" id="seventhdiagram">
-                diagram 7
-            </section>
-            <section className="diagram" id="sixthdiagram">
-                diagram 6
-            </section>
-            <section className="diagram" id="fifthdiagram">
-                diagram 5
-            </section>
-            <section className="diagram" id="fourthdiagram">
-                diagram 4
-            </section>
-            <section className="diagram" id="thirddiagram">
-                diagram 3
-            </section>
-            <section className="diagram" id="seconddiagram">
-                diagram 2
-            </section>
-            <section className="diagram" id="firstdiagram">
-                diagram 1
-            </section>
             <section className="diagram" id="cover">
                 <img src={nobelTitle} className="animeTitle" />
                 <img src={nobelCoin} className="coin" />
-                <p>Nobelpriset är årliga internationella utmärkelser, som av tre svenska och en norsk institution tilldelas personer som "gjort mänskligheten den största nytta" inom fysik, kemi, fysiologi eller medicin, litteratur och fredsarbete. Priserna fastställdes av dynamitens uppfinnare, Alfred Nobel, genom hans testamente från 1895, och delades ut första gången 1901. Varje nobelpris anses som den mest prestigefyllda utmärkelsen inom sitt område.</p>
+                <p>Nobelpriset är årliga internationella utmärkelser, som av tre svenska och en norsk institution tilldelas personer som "gjort mänskligheten den största nytta" inom fysik, kemi, fysiologi eller medicin, litteratur och fredsarbete. Priserna fastställdes av dynamitens uppfinnare, Alfred Nobel, genom hans testamente från 1895, och delades ut första gången 1901. Varje nobelpris anses som den mest prestigefyllda utmärkelsen inom sitt område. </p>
+            </section>
+            
+            <section className="diagram" id="firstdiagram">
+                <p>Genomsnittliga prissumman per år</p>
+                <Line data={yearlyPriceMoneyDiagramData} datasetIdKey='id' />
+            </section>
+            
+            <section className="diagram" id="seconddiagram">
+                <p>Antalet pristagare inom de olika kategorierna</p>
+                <p>[välj år]</p>
+            </section>
+            
+            <section className="diagram" id="thirddiagram">
+                <p>{totalLauretes} personer har tagit emot nobelpriset</p>
+                <Pie data={lauretsCategoryDiagramData}/>
+            </section>
+            
+            <section className="diagram" id="fourthdiagram">
+                <p>Fördelningen mellan män och kvinnor bland pristagare</p>
+                <Pie data={genderDiagramData} />
+            </section>
+            
+            <section className="diagram" id="fifthdiagram">
+                <p>Nobelpriset har delats ut {totalPrices} gånger</p>
+                <Bar data={categoryDiagramData} />
+            </section>
+            
+            <section className="diagram" id="sixthdiagram">
+                <p>Vilka länder pristagarna kommer ifrån, med minst 3.</p>
+                <Doughnut data={countryDiagramData} />
+            </section>
+
+            <section className="diagram" id="seventhdiagram">
+                <p>De Nobelpristagare som vunnit mer än ett pris</p>
+                <PolarArea data={mostAwardsDiagramData} />
             </section>
         </section>
     )

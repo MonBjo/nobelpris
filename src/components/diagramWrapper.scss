@@ -2,27 +2,32 @@
     position: relative;
     margin-bottom: 4em;
     width: 85vw;
-
     perspective: 1000px;
 
     .diagram {
         position: absolute;
+        display: none;
+        width: 70%;
+        height: 70%;
+        left: 15%;
+        top: 15%;
+        padding-bottom: 5%;
         background-color: #dbdbdb;
         color: black;
-        width: 50%;
-        height: 60%;
+        text-align: center;
         box-shadow: 5px 5px 5px black;
-        left: 25%;
-        top: 15%;
-        display: none;
         box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 15px 15px 15px black;
     }
     .display { 
-        display: block; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         transform-origin: bottom left;
     }
     .flip { 
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         z-index: 10;
         box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 10px 10px 15px black;
         transform-origin: bottom left;
@@ -41,7 +46,9 @@
     //     backface-visibility: hidden;
     // }
     .hide { 
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         z-index: -10;
         box-shadow: inset 0px 0px 100px rgb(66, 54, 38), 10px 10px 15px black;
     }
