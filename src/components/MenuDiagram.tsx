@@ -5,8 +5,7 @@ interface Props {
 }
 
 function MenuDiagram({setDisplayDiagram}: Props) {
-    function onChangeValue(event) {
-        console.log(event.target.value);
+    function onChangeValue(event: React.ChangeEvent<HTMLInputElement>) {
         setDisplayDiagram(event.target.value);
     }
 
@@ -15,10 +14,6 @@ function MenuDiagram({setDisplayDiagram}: Props) {
             <section className="fakeButton">
                 <input type="radio" value="firstdiagram" id="done" name="diagram" />
                 <label htmlFor="done">Genomsnittliga prissumman per år</label>
-            </section>
-            <section className="fakeButton">
-                <input type="radio" id="dtwo" value="seconddiagram" name="diagram" />
-                <label htmlFor="dtwo">Antalet pristagare inom de olika kategorierna, för ett valt år</label>
             </section>
             <section className="fakeButton">
                 <input type="radio" id="dthree" value="thirddiagram" name="diagram" />

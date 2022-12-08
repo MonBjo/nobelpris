@@ -27,60 +27,65 @@ function DiagramWrapper({displayDiagram, animation}: Props) {
     useEffect(() => {
         if(reference.current !== null) {
             const refChildren = Array.from(reference.current.children);
+
             if(!displayDiagram) {
                 refChildren[0].classList.add('display');
             } else {
                 if(animation == "pages") {
-                refChildren.forEach((children: any, id: number) => {
-                    if(children.className.includes('display')) {
-                        children.classList.add('flip');
-                        children.classList.remove('display');
-                        setTimeout(() => {
-                            children.classList.remove('flip');
-                        }, 1500+2000);
-                    }
+                    const bookRaiseTimeDelay: number = 1000;
+                    const bookFallbackTime: number = 1500;
+                    const pageFlipTime: number = 2000;
 
-                    if(children.id == displayDiagram) {
-                        children.classList.add('display');
-                    } else {
-                        setTimeout(() => {
+                    refChildren.forEach((children: any, id: number) => {
+                        if(children.className.includes('display')) {
+                            children.classList.add('flip');
                             children.classList.remove('display');
-                        }, 1500+2000);
-                    }
-                });
-
-                anime({
-                    targets: ['.display'],
-                    duration: 1500,
-                    easing: 'easeInCirc',
-                    direction: 'alternate',
-                    rotateX: 50,
-                    rotateZ: 10, 
-                    translateZ: -105,
-                    endDelay: 1000
-                });
-                anime({
-                    targets: ['.flip'], 
-                    direction: 'alternate',
-                    keyframes: [
-                        { 
-                            rotateX: 50,
-                            rotateZ: 10, 
-                            opacity: 3,
-                            translateZ: -100,
-                            easing: 'easeInCirc',
-                            duration: 1500 
-                        },
-                        { 
-                            rotateY: -180, 
-                            rotateZ: -5, 
-                            translateX: 50,
-                            opacity: 0, 
-                            easing: 'easeInOutSine', 
-                            duration: 2000 
+                            setTimeout(() => {
+                                children.classList.remove('flip');
+                            }, bookFallbackTime + pageFlipTime);
                         }
-                    ]
-                });
+
+                        if(children.id == displayDiagram) {
+                            children.classList.add('display');
+                        } else {
+                            setTimeout(() => {
+                                children.classList.remove('display');
+                            }, bookFallbackTime + pageFlipTime);
+                        }
+                    });
+
+                    anime({
+                        targets: ['.display'],
+                        duration: bookFallbackTime,
+                        easing: 'easeInCirc',
+                        direction: 'alternate',
+                        rotateX: 50,
+                        rotateZ: 10, 
+                        translateZ: -105,
+                        endDelay: bookRaiseTimeDelay
+                    });
+                    anime({
+                        targets: ['.flip'], 
+                        direction: 'alternate',
+                        keyframes: [
+                            { 
+                                rotateX: 50,
+                                rotateZ: 10, 
+                                opacity: 3,
+                                translateZ: -100,
+                                easing: 'easeInCirc',
+                                duration: bookFallbackTime 
+                            },
+                            { 
+                                rotateY: -180, 
+                                rotateZ: -2, 
+                                translateX: 15,
+                                opacity: 0, 
+                                easing: 'easeInOutSine', 
+                                duration: pageFlipTime 
+                            }
+                        ]
+                    });
                 } else if(animation == "sneaking") {
                     refChildren.forEach((children: any, id: number) => {
                         if(children.className.includes('display')) {
@@ -103,7 +108,6 @@ function DiagramWrapper({displayDiagram, animation}: Props) {
                     anime({
                         targets: ['.display'],
                         direction: 'forwards',
-                        // easing: 'easeOutBack',
                         easing: 'easeInBack',
                         keyframes: [
                             {

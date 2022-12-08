@@ -13,18 +13,20 @@ const lauretsCategoryData: (string|undefined)[] = laureates.map(laureate => {
 	}
 });
 const countryData: (string|undefined)[] = laureates.map(laureate => {
-	if(laureate.founded !== undefined) {
-		if(laureate.founded.place.countryNow !== undefined) {
+	if(laureate.founded) {
+		if(laureate.founded.place.countryNow) {
 			return laureate.founded.place.countryNow.se;
 		} else {
 			// console.log(laureate);
+			return "unkown";
 		}
-	} else if(laureate.birth !== undefined) {
-		if(laureate.birth.place.countryNow !== undefined) {
+	} else if(laureate.birth) {
+		if(laureate.birth.place.countryNow) {
 			return laureate.birth.place.countryNow.se;
 		}
 	} else {
 		// console.log(laureate);
+		return "unkown";
 	}
 });
 const laureatsNameData: (string|undefined)[] = laureates.map(laureate => {
@@ -39,8 +41,37 @@ const laureatsNameData: (string|undefined)[] = laureates.map(laureate => {
 const laureatsAwardCountData = laureates.map(laureate => laureate.nobelPrizes.length );
 
 
+
+function setLablesAndCount(dataArray: any, labelArray: string[], countArray: any, undefinedLabel: string) {
+	for(let data of dataArray) {
+		if(data == undefined) {
+			if(!labelArray.includes(undefinedLabel)) {
+				labelArray.push(undefinedLabel);
+			}
+	
+			if (countArray[undefinedLabel] === undefined ) {
+				countArray[undefinedLabel] = 1;
+			} else {
+				countArray[undefinedLabel]++;  
+			}
+		} else {
+		
+			if(!labelArray.includes(data)) {
+				labelArray.push(data);
+			}
+			
+			if (countArray[data] === undefined ) {
+				countArray[data] = 1;
+			} else {
+				countArray[data]++;  
+			}
+		}
+	}
+}
+
+
 /* =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= *\
-\* =*= Genomsnittliga prissumman per år =*= */
+\* =*=*=*=*=*=*=*=  Genomsnittliga prissumman per år =*=*=*=*=*=*=*= */
 export const yearlyPriceMoneyDiagramData =  {
 	labels: awardYears,
 	datasets: [
@@ -60,34 +91,17 @@ export const yearlyPriceMoneyDiagramData =  {
     ]
 };
 
-/* =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= *\
-\* =*= Antalet pristagare inom de olika kategorierna, för ett valt år =*= */
-
 
 /* =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= *\
-\* =*= Antalet pristagare totalt, fördelat på de olika kategorierna (cirkeldiagram) =*= */
+\*    Antalet pristagare totalt, fördelat på de olika kategorierna   */
 let lauretsCategoryLable: string[] = [];
 let lauretsCategoryCount: any = {};
-for(let category of lauretsCategoryData) {
-	if(category == undefined) {
-		console.log("category is undefined", category);
-	} else {
-	
-		if(!lauretsCategoryLable.includes(category)) {
-			lauretsCategoryLable.push(category);
-		}
-		
-		if (lauretsCategoryCount[category] === undefined ) {
-			lauretsCategoryCount[category] = 1;
-		} else {
-			lauretsCategoryCount[category]++;  
-		}
-	}
-}
+setLablesAndCount(lauretsCategoryData, lauretsCategoryLable, lauretsCategoryCount, "annan kategori");
 
-let lauretsCAtegoryData: number[] = [];
+
+let lauretsCategoryDataset: number[] = [];
 lauretsCategoryLable.forEach(label => {
-	lauretsCAtegoryData.push(lauretsCategoryCount[label])
+	lauretsCategoryDataset.push(lauretsCategoryCount[label])
 });
 
 export const lauretsCategoryDiagramData = {
@@ -95,7 +109,7 @@ export const lauretsCategoryDiagramData = {
 	datasets: [
 		{
 			label: 'Antal',
-			data: lauretsCAtegoryData,
+			data: lauretsCategoryDataset,
 			backgroundColor: ['#be9b7b','#fff4e6','#854442','#4b3832','#bebd7b', '#856642'],
 			borderColor: '#3c2f2f'
 		}
@@ -103,33 +117,10 @@ export const lauretsCategoryDiagramData = {
 }
 
 /* =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= *\
-\* =*= Fördelningen mellan män och kvinnor bland pristagare (cirkeldiagram) =*= */
+\* =*=*=  Fördelningen mellan män och kvinnor bland pristagare =*=*= */
 let genderLabels: string[] = [];
 let genderCount: any = {};
-const undefinedLabel = "organisation";
-for(let gender of genderData) {
-	if(gender == undefined) {
-		if(!genderLabels.includes(undefinedLabel)) {
-			genderLabels.push(undefinedLabel);
-		}
-
-		if (genderCount[undefinedLabel] === undefined ) {
-			genderCount[undefinedLabel] = 1;
-		} else {
-			genderCount[undefinedLabel]++;  
-		}
-	} else {
-		if(!genderLabels.includes(gender)) {
-			genderLabels.push(gender);
-		}
-		
-		if (genderCount[gender] === undefined ) {
-			genderCount[gender] = 1;
-		} else {
-			genderCount[gender]++;  
-		}
-	}
-}
+setLablesAndCount(genderData, genderLabels, genderCount, "organisation");
 
 let genderDataset: number[] = [];
 genderLabels.forEach(label => {
@@ -140,7 +131,7 @@ export const genderDiagramData = {
 	datasets: [
 		{
 			data: genderDataset,
-			label: 'Count',
+			label: 'Antal',
 			backgroundColor: ['#be9b7b','#fff4e6','#854442'],
 			borderColor: '#3c2f2f'
 		}
@@ -149,20 +140,10 @@ export const genderDiagramData = {
 }
 
 /* =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= *\
-\* =*= Hur många gånger som Nobelpriset delats ut, inom varje kategori =*= */
+\*  Hur många gånger som Nobelpriset delats ut, inom varje kategori  */
 let categoryLabels: string[] = [];
 let categoryCount: any = {};
-for(let category of categoryData) {
-	if(!categoryLabels.includes(category)) {
-		categoryLabels.push(category);
-	}
-	
-	if (categoryCount[category] === undefined ) {
-		categoryCount[category] = 1;
-	} else {
-		categoryCount[category]++;  
-	}
-}
+setLablesAndCount(categoryData, categoryLabels, categoryCount, "annan kategori");
 
 let categoryDataset: number[] = [];
 categoryLabels.forEach(label => {
@@ -183,22 +164,10 @@ export const categoryDiagramData = {
 
 
 /* =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= *\
-\* =*= Hur många pristagare som kommer från olika länder =*= */
+\* =*=*=*= Hur många pristagare som kommer från olika länder =*=*=*= */
 let countryLabels: string[] = [];
 let countryCount: any = {};
-for(let country of countryData) {
-	if(country !== undefined) { 
-		if(!countryLabels.includes(country)) {
-			countryLabels.push(country);
-		}
-		
-		if (countryCount[country] === undefined ) {
-			countryCount[country] = 1;
-		} else {
-			countryCount[country]++;  
-		}
-	}
-}
+setLablesAndCount(countryData, countryLabels, countryCount, "annat land");
 
 
 let processedCountryData: { country: string; count: any; }[] = [];
@@ -229,10 +198,7 @@ export const countryDiagramData = {
 }
 
 /* =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= *\
-\* =*= De Nobelpristagare som vunnit flest Nobelpris. Visa till exempel topp 10. =*= */
-
-
-// TODO: Fix name display error! 
+\* =*=*=*=*= De Nobelpristagare som vunnit flest Nobelpris =*=*=*=*= */
 
 let processedLaureatesData = [];
 for(let i = 0; i <= laureatsNameData.length; i++) {
@@ -244,19 +210,20 @@ let updatedLaureatesLables = [];
 let awardCountDataset = [];
 for(let data of processedLaureatesData) {
 	if(data.awards > 1) {
-		console.log("data", data);
+		// console.log("data", data);
 		updatedLaureatesLables.push(data.name);
 		awardCountDataset.push(data.awards);
 	}
 }
+
 export const mostAwardsDiagramData = {
-	lables: updatedLaureatesLables,
+	labels: updatedLaureatesLables,
 	datasets: [
 		{
-			lable: "Pris",
+			label: "Antal",
 			data: awardCountDataset,
 			backgroundColor: ['#be9b7b','#fff4e6','#854442','#4b3832','#bebd7b', '#856642'],
 			borderColor: '#3c2f2f'
 		}
-	]
+	],
 }

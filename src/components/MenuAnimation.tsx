@@ -5,8 +5,7 @@ interface Props {
 }
 
 function MenuAnimation({setAnimation}: Props) {
-    function onChangeValue(event) {
-        console.log(event.target.value);
+    function onChangeValue(event: React.ChangeEvent<HTMLInputElement>) {
         setAnimation(event.target.value);
     }
 
@@ -18,8 +17,8 @@ function MenuAnimation({setAnimation}: Props) {
                 <label htmlFor="one">Bläddra</label>
             </section>
             <section className="fakeButton">
-                <input type="radio" id="three" value="sneaking" name="animation" />
-                <label htmlFor="three">Kameleont gång</label>
+                <input type="radio" id="two" value="sneaking" name="animation" />
+                <label htmlFor="two">Kameleont gång</label>
             </section>
         </nav>
     )
