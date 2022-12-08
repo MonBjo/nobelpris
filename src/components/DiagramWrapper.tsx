@@ -12,7 +12,7 @@ import {
     lauretsCategoryDiagramData,
     countryDiagramData,
     mostAwardsDiagramData
-} from './data.ts';
+} from './data';
 
 interface Props {
     displayDiagram: string;
