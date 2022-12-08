@@ -275,12 +275,7 @@ function DiagramWrapper({displayDiagram, animation}: Props) {
                 <p>Genomsnittliga prissumman per år</p>
                 <Line data={yearlyPriceMoneyDiagramData} datasetIdKey='id' />
             </section>
-            
-            <section className="diagram" id="seconddiagram">
-                <p>Antalet pristagare inom de olika kategorierna</p>
-                <p>[välj år]</p>
-            </section>
-            
+
             <section className="diagram" id="thirddiagram">
                 <p>{totalLauretes} personer har tagit emot nobelpriset</p>
                 <Pie data={lauretsCategoryDiagramData}/>
